@@ -73,55 +73,40 @@ features = features.sample(frac=1)
 X = features.iloc[:, :-1]
 y = features['defects'].map({True: 1, False: 0})
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42)
-print(X_train.shape, y_train.shape)
-print(X_test.shape, y_test.shape)
+# print(X_train.shape, y_train.shape)
+# print(X_test.shape, y_test.shape)
 
 
-# def rf(n_estimators, min_samples_leaf, min_samples_split, max_leaf_nodes, max_features, max_depth):
-#     forest = RandomForestClassifier(n_estimators=n_estimators, min_samples_leaf=min_samples_leaf, min_samples_split=min_samples_split,
-#                                     max_leaf_nodes=max_leaf_nodes, max_features=max_features, max_depth=max_depth)
+def rf(n_estimators, min_samples_leaf, min_samples_split, max_leaf_nodes, max_features, max_depth):
+    forest = RandomForestClassifier(n_estimators=n_estimators, min_samples_leaf=min_samples_leaf, min_samples_split=min_samples_split,
+                                    max_leaf_nodes=max_leaf_nodes, max_features=max_features, max_depth=max_depth)
+
+    forest.fit(X_train, y_train)
+    y_pred = forest.predict(X_test)
+    precision = precision_score(y_test, y_pred, average="macro")
+    print(precision)
+
+    return precision
+
+
+result = list(de(rf, bounds=[(50, 150), (1, 20), (2, 20), (2, 50), (0.01, 1), (1, 10)]))
+print(result[-1])
+
+
+# forest = RandomForestClassifier(n_estimators=79, min_samples_leaf=6, min_samples_split=14, max_leaf_nodes=21,
+#                                 max_features=0.81, max_depth=1)
 #
-#     forest.fit(X_train, y_train)
-#     y_pred = forest.predict(X_test)
-#     precision = precision_score(y_test, y_pred, average="macro")
+# forest.fit(X_train, y_train)
+# y_pred = forest.predict(X_test)
+# print(y_pred)
 #
-#     return precision
+# print(f1_score(y_test, y_pred, average="macro"))
+# print(precision_score(y_test, y_pred, average="macro"))
+# print(recall_score(y_test, y_pred, average="macro"))
 #
-#
-# result = list(de(rf, bounds=[(50, 150), (1, 20), (2, 20), (2, 50), (0.01, 1), (1, 10)]))
-# print(result[-1])
 
-
-forest = RandomForestClassifier(n_estimators=100, min_samples_leaf=20, min_samples_split=6, max_leaf_nodes=6,
-                                max_features=0.95, max_depth=6)
-
-forest.fit(X_train, y_train)
-y_pred = forest.predict(X_test)
-print(y_pred)
-
-print(f1_score(y_test, y_pred, average="macro"))
-print(precision_score(y_test, y_pred, average="macro"))
-print(recall_score(y_test, y_pred, average="macro"))
-
-
-forest1 = RandomForestClassifier(n_estimators=50, min_samples_leaf=8, min_samples_split=18, max_leaf_nodes=6,
-                                max_features=0.95, max_depth=6)
-
-forest1.fit(X_train, y_train)
-y_pred1 = forest1.predict(X_test)
-print(y_pred1)
-
-print(f1_score(y_test, y_pred1, average="macro"))
-print(precision_score(y_test, y_pred1, average="macro"))
-print(recall_score(y_test, y_pred1, average="macro"))
-
-
-# default
+# default value result
 # 0.46120689655172414
 # 0.4385245901639344
 # 0.4863636363636364
-
-# (array([1.15849717e+02, 1.52103105e+01, 2.16998318e+00, 1.01189382e+01,
-#        1.06815155e-01, 6.03650732e+00]), 0.44)
-
 
