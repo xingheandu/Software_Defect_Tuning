@@ -77,32 +77,32 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random
 # print(X_test.shape, y_test.shape)
 
 
-def rf(n_estimators, min_samples_leaf, min_samples_split, max_leaf_nodes, max_features, max_depth):
-    forest = RandomForestClassifier(n_estimators=n_estimators, min_samples_leaf=min_samples_leaf, min_samples_split=min_samples_split,
-                                    max_leaf_nodes=max_leaf_nodes, max_features=max_features, max_depth=max_depth)
-
-    forest.fit(X_train, y_train)
-    y_pred = forest.predict(X_test)
-    precision = precision_score(y_test, y_pred, average="macro")
-    print(precision)
-
-    return precision
-
-
-result = list(de(rf, bounds=[(50, 150), (1, 20), (2, 20), (2, 50), (0.01, 1), (1, 10)]))
-print(result[-1])
-
-
-# forest = RandomForestClassifier(n_estimators=79, min_samples_leaf=6, min_samples_split=14, max_leaf_nodes=21,
-#                                 max_features=0.81, max_depth=1)
+# def rf(n_estimators, min_samples_leaf, min_samples_split, max_leaf_nodes, max_features, max_depth):
+#     forest = RandomForestClassifier(n_estimators=n_estimators, min_samples_leaf=min_samples_leaf, min_samples_split=min_samples_split,
+#                                     max_leaf_nodes=max_leaf_nodes, max_features=max_features, max_depth=max_depth)
 #
-# forest.fit(X_train, y_train)
-# y_pred = forest.predict(X_test)
+#     forest.fit(X_train, y_train)
+#     y_pred = forest.predict(X_test)
+#     precision = precision_score(y_test, y_pred, average="macro")
+#     print(precision)
+#
+#     return precision
+#
+#
+# result = list(de(rf, bounds=[(50, 150), (1, 20), (2, 20), (2, 50), (0.01, 1), (1, 10)]))
+# print(result[-1])
+
+
+forest = RandomForestClassifier(n_estimators=100, min_samples_leaf=1, min_samples_split=2, max_leaf_nodes=None,
+                                max_features=None, max_depth=5)
+
+forest.fit(X_train, y_train)
+y_pred = forest.predict(X_test)
 # print(y_pred)
-#
-# print(f1_score(y_test, y_pred, average="macro"))
-# print(precision_score(y_test, y_pred, average="macro"))
-# print(recall_score(y_test, y_pred, average="macro"))
+
+print(f1_score(y_test, y_pred, average="macro"))
+print(precision_score(y_test, y_pred, average="macro"))
+print(recall_score(y_test, y_pred, average="macro"))
 #
 
 # default value result
