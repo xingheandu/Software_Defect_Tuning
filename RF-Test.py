@@ -1,102 +1,127 @@
 from sklearn.ensemble import RandomForestClassifier
-import matplotlib.pyplot as plt
-from sklearn import datasets
-from sklearn.cross_validation import train_test_split
+from sklearn.model_selection import train_test_split
 import numpy as np
-from scipy.io import arff
-from matplotlib.colors import ListedColormap
+import pandas as pd
+from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score, classification_report, confusion_matrix
+import warnings
+warnings.filterwarnings('ignore')
 
-# data = arff.loadarff(r'C:\Users\Terry\PycharmProjects\MLOptimization\Optimizer\cm1.arff')
-# df = pd.DataFrame(data[0])
+
+def de(func, bounds, mut=0.8, crossp=0.7, popsize=20, its=200):
+    dimensions = len(bounds)
+    pop = np.random.rand(popsize, dimensions)
+
+    # pdb.set_trace()
+    min_b, max_b = np.asarray(bounds).T
+    diff = np.fabs(min_b - max_b)
+    pop_denorm = min_b + pop * diff
+
+    # convert from float to integer
+    pop_denorm_convert = pop_denorm.tolist()
+
+    result_list = []
+    temp_list = []
+
+    for index in pop_denorm_convert:
+        temp_list.append(np.int_(np.round_(index[0])))
+        temp_list.append(np.int_(np.round_(index[1])))
+        temp_list.append(np.int_(np.round_(index[2])))
+        temp_list.append(np.int_(np.round_(index[3])))
+        temp_list.append(float('%.2f' % index[4]))
+        temp_list.append(np.int(np.round_(index[5])))
+        result_list.append(temp_list)
+        temp_list = []
+
+    fitness = np.asarray([func(index[0], index[1], index[2], index[3], index[4], index[5])
+                          for index in result_list])
+
+    best_idx = np.argmax(fitness)
+    best = pop_denorm[best_idx]
+
+    for i in range(its):
+        for j in range(popsize):
+            idxs = [idx for idx in range(popsize) if idx != j]
+            a, b, c = pop[np.random.choice(idxs, 3, replace=False)]
+            mutant = a + mut * (b - c)
+            for i, v in enumerate(mutant):
+                if 0 < v < 1: continue
+                if v < 0: mutant[i] = v + 1
+                if v > 1: mutant[i] = v - 1
+            # mutant = np.clip(res, 0, 1)
+
+            cross_points = np.random.rand(dimensions) < crossp
+            if not np.any(cross_points):
+                cross_points[np.random.randint(0, dimensions)] = True
+
+            trial = np.where(cross_points, mutant, pop[j])
+            trial_denorm = min_b + trial * diff
+            trail_denorm_convert = trial_denorm.tolist()
+            f = func(np.int_(np.round_(trail_denorm_convert[0])), np.int_(np.round_(trail_denorm_convert[1])), np.int_(np.round_(trail_denorm_convert[2])),
+                     np.int_(np.round_(trail_denorm_convert[3])), float('%.2f' % trail_denorm_convert[4]), np.int_(np.round_(trail_denorm_convert[5])))
+
+            if f > fitness[j]:
+                fitness[j] = f
+                pop[j] = trial
+                if f > fitness[best_idx]:
+                    best_idx = j
+                    best = trial_denorm
+        yield best, fitness[best_idx]
+
+
+features = pd.read_csv(r'C:\Users\terry\PycharmProjects\tutorial\Optimizer\cm1.csv')
+features = features.sample(frac=1)
+X = features.iloc[:, :-1]
+y = features['defects'].map({True: 1, False: 0})
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42)
+print(X_train.shape, y_train.shape)
+print(X_test.shape, y_test.shape)
+
+
+# def rf(n_estimators, min_samples_leaf, min_samples_split, max_leaf_nodes, max_features, max_depth):
+#     forest = RandomForestClassifier(n_estimators=n_estimators, min_samples_leaf=min_samples_leaf, min_samples_split=min_samples_split,
+#                                     max_leaf_nodes=max_leaf_nodes, max_features=max_features, max_depth=max_depth)
 #
-# print(df.head())
+#     forest.fit(X_train, y_train)
+#     y_pred = forest.predict(X_test)
+#     precision = precision_score(y_test, y_pred, average="macro")
 #
-
-def plot_decision_regions(X, y, classifier,
-                          test_idx=None, resolution=0.02):
-
-    # setup marker generator and color map
-    markers = ('s', 'x', 'o', '^', 'v')
-    colors = ('red', 'blue', 'lightgreen', 'gray', 'cyan')
-    cmap = ListedColormap(colors[:len(np.unique(y))])
-
-    # plot the decision surface
-    x1_min, x1_max = X[:, 0].min() - 1, X[:, 0].max() + 1
-    x2_min, x2_max = X[:, 1].min() - 1, X[:, 1].max() + 1
-    xx1, xx2 = np.meshgrid(np.arange(x1_min, x1_max, resolution),
-                           np.arange(x2_min, x2_max, resolution))
-    Z = classifier.predict(np.array([xx1.ravel(), xx2.ravel()]).T)
-    Z = Z.reshape(xx1.shape)
-    plt.contourf(xx1, xx2, Z, alpha=0.4, cmap=cmap)
-    plt.xlim(xx1.min(), xx1.max())
-    plt.ylim(xx2.min(), xx2.max())
-
-    # plot all samples
-    X_test, y_test = X[test_idx, :], y[test_idx]
-    for idx, cl in enumerate(np.unique(y)):
-        plt.scatter(x=X[y == cl, 0], y=X[y == cl, 1],
-                    alpha=0.8, c=cmap(idx),
-                    marker=markers[idx], label=cl)
-
-    # highlight test samples
-    if test_idx:
-        X_test, y_test = X[test_idx, :], y[test_idx]
-        plt.scatter(X_test[:, 0], X_test[:, 1], c='',
-                    alpha=1.0, linewidth=1, marker='o',
-                    s=55, label='test set')
-
-
-"""Random forests creates decision trees on randomly selected
-data samples, gets prediction from each tree and selects the 
-best solution by means of voting"""
-
-"""In a classification problem, each tree votes and the most
-popular class is chosen as the final result. 
-In the case of regression, the average of all the tree outputs
-is considered as the final result."""
-
-# iris = datasets.load_iris()
-# X = iris.data[:,[2,3]]
-# y = iris.target
+#     return precision
 #
-# X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=0)
 #
-# forest = RandomForestClassifier(criterion='entropy',
-#                                 n_estimators=10,
-#                                 random_state=1,
-#                                 n_jobs=2)
-#
-# forest.fit(X_train, y_train)
-#
-# X_combined = np.vstack((X_train, X_test))
-# y_combined = np.hstack((y_train, y_test))
-# plot_decision_regions(X_combined, y_combined, classifier=forest, test_idx=range(105,150))
-# plt.xlabel('petal length')
-# plt.ylabel('petal width')
-# plt.legend(loc='upper left')
-# plt.show()
+# result = list(de(rf, bounds=[(50, 150), (1, 20), (2, 20), (2, 50), (0.01, 1), (1, 10)]))
+# print(result[-1])
 
 
-features = arff.loadarff(r'C:\Users\Terry\PycharmProjects\MLOptimization\Optimizer\cm1.arff')
-# features = pd.get_dummies(features)
-features = np.array(features)
-print(features)
-labels = np.array(features['defects'])
-print(labels)
+forest = RandomForestClassifier(n_estimators=100, min_samples_leaf=20, min_samples_split=6, max_leaf_nodes=6,
+                                max_features=0.95, max_depth=6)
 
-train_features, test_features, train_labels, test_labels = train_test_split(features, labels, test_size=0.25, random_state=42)
+forest.fit(X_train, y_train)
+y_pred = forest.predict(X_test)
+print(y_pred)
 
-forest = RandomForestClassifier(criterion='entropy',
-                                n_estimators=10,
-                                random_state=1,
-                                n_jobs=2)
+print(f1_score(y_test, y_pred, average="macro"))
+print(precision_score(y_test, y_pred, average="macro"))
+print(recall_score(y_test, y_pred, average="macro"))
 
-forest.fit(train_features, train_labels)
 
-# X_combined = np.vstack((train_features, test_features))
-# y_combined = np.hstack((train_labels, test_labels))
-# plot_decision_regions(X_combined, y_combined, classifier=forest, test_idx=range(105,150))
-# # plt.xlabel('petal length')
-# # plt.ylabel('petal width')
-# # plt.legend(loc='upper left')
-# plt.show()
+forest1 = RandomForestClassifier(n_estimators=50, min_samples_leaf=8, min_samples_split=18, max_leaf_nodes=6,
+                                max_features=0.95, max_depth=6)
+
+forest1.fit(X_train, y_train)
+y_pred1 = forest1.predict(X_test)
+print(y_pred1)
+
+print(f1_score(y_test, y_pred1, average="macro"))
+print(precision_score(y_test, y_pred1, average="macro"))
+print(recall_score(y_test, y_pred1, average="macro"))
+
+
+# default
+# 0.46120689655172414
+# 0.4385245901639344
+# 0.4863636363636364
+
+# (array([1.15849717e+02, 1.52103105e+01, 2.16998318e+00, 1.01189382e+01,
+#        1.06815155e-01, 6.03650732e+00]), 0.44)
+
+
