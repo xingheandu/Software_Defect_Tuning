@@ -1,8 +1,9 @@
 # Software_Defect_Tuning
-Tuning Random Forest with differential evolution
+Paralleling Differential Evolution Algorithm in Hyperparameter Optimization for Defect Prediction
 
 
 Dataset source:
+
 PROMISE Software Engineering Repository
 ```
 http://promise.site.uottawa.ca/SERepository/datasets-page.html
