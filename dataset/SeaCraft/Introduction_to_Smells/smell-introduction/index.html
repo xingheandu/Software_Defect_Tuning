@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>When and Why Your Code Starts to Smell Bad</title>
+  <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
+  <link rel="stylesheet" type="text/css" href="../TestSmells/style/style.css" title="style" />
+</head>
+
+<body>
+  <div id="main">
+    <div id="header">
+      <div id="logo">
+        <div id="logo_text">
+          <!-- class="logo_colour", allows you to change the colour of the text -->
+          <h1><a href="../smell-introduction/index.html">When and Why Your Code Starts to Smell Bad<br><br>
+          <span class="logo_colour">Experimental material and raw data</span></a></h1>
+        </div>
+      </div>
+      <div id="menubar">
+        <ul id="menu">
+          <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
+          <li class="selected"><a href="../smell-introduction/index.html">Home</a></li>
+        </ul>
+      </div>
+    </div>
+    <div id="site_content">
+      <div class="sidebar">
+        <!-- insert your sidebar items here -->
+        <h3>Authors</h3>
+        <h4>Michele Tufano</h4>
+        <h5>The College of William & Mary, USA</h5>
+        <p></p>
+        <h4>Fabio Palomba</h4>
+        <h5>University of Salerno, Italy</h5>
+        <p></p>
+        <h4>Gabriele Bavota</h4>
+        <h5>University of Sannio, Italy</h5>
+        <p></p>
+        <h4>Rocco Oliveto</h4>
+        <h5>University of Molise, Italy</h5>
+        <p></p>
+        <h4>Massimiliano Di Penta</h4>
+        <h5>University of Sannio, Italy</h5>
+        <p></p>
+        <h4>Andrea De Lucia</h4>
+        <h5>University of Salerno, Italy</h5>
+        <p></p>
+        <h4>Denys Poshyvanyk</h4>
+        <h5>The College of William & Mary, USA</h5>
+        <p></p>
+      </div>
+      <div id="content">
+        <!-- insert the page content here -->
+        <h1>Abstract</h1>
+        <p style="text-align: justify">In the last decade researchers have developed tools to automatically detect bad smells, i.e., 
+symptoms of poor design and implementation choices. While such smells
+have been object of several empirical studies, there is still little knowledge 
+on <i>when</i> and <i>why</i> bad smells are introduced. 
+To fill this gap, we conducted a large empirical study over the change 
+history of 200 open source projects and investigating when bad smells are introduced by developers, and the circumstances and reasons behind their appearances. Our study required the development of a strategy
+to identify smell-introducing commits, the mining of over 0.5M commits, and the manual analysis of 9,164 of them (i.e., those identified as smell-introducing).
+Our findings mostly contradict common wisdom about smell being introduced during evolutionary tasks,  and trigger the development of a new generation of recommenders aimed at properly planning smell refactoring activities.</p>
+        
+        <h2>RQ1: When are code smells introduced?</h2>
+        <ul>
+          <li>Raw data of number of commits needed by a smell for its introduction: <a href="../smell-introduction/downloads/rawDataTime.zip">rawDataTime.zip</a></li>
+          <li>Raw data of metrics trend: <a href="../smell-introduction/downloads/rawDataMetrics.zip">rawDataMetrics.zip</a></li>
+          <li>R2 achieved by the different functions tested for regression analysis (and leading to the selection of the liner regression model): <a href="../smell-introduction/downloads/regressionR2.zip">regressionR2.zip</a></li>
+        </ul>
+        <br>
+        <h2>RQ2: Why are code smells introduced?</h2>
+        <ul>
+          <li>Raw data of assigned tags: <a href="../smell-introduction/downloads/assignedTags.zip">assignedTags.zip</a></li>
+        </ul>
+        <h2>Replicating the study by just considering the 2,555 smell-introducing commits manually validated</h2>
+        <ul>
+          <li>Achieved results: <a href="../smell-introduction/downloads/validated.pdf">validated.pdf</a></li>
+        </ul>
+      </div>
+    </div>
+    <div id="content_footer"></div>
+    <div id="footer">
+    </div>
+  </div>
+<div style="text-align: center; font-size: 0.75em;">Design downloaded from <a href="http://www.freewebtemplates.com/">free website templates</a>.</div></body>
+</html>
