@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Metrics scope="cayenne-3.0.1_eclipse-cayenne3.1-cay-1468-src" type="Project" date="2013-05-08" xmlns="http://metrics.sourceforge.net/2003/Metrics-First-Flat">
+   <Cycle name="test.cayenne et al" nodes="2" diameter="1">
+      <Package>test.cayenne</Package>
+      <Package>test.cayenne.auto</Package>
+   </Cycle>
+   <Metric id = "VG" description ="McCabe Cyclomatic Complexity" max ="10" hint ="use Extract-method to split the method up">
+      <Values per = "method" avg = "1.235" stddev = "0.424" max = "2">
+         <Value name="getInstance" source ="M1.java" package ="test.cayenne" value ="2"/>
+         <Value name="_500T2s" source ="Main.java" package ="test" value ="2"/>
+         <Value name="linearAll" source ="Main.java" package ="test" value ="2"/>
+         <Value name="warmup" source ="Main.java" package ="test" value ="2"/>
+         <Value name="addToT2s" source ="_T1.java" package ="test.cayenne.auto" value ="1"/>
+         <Value name="getName" source ="_T1.java" package ="test.cayenne.auto" value ="1"/>
+         <Value name="getT2s" source ="_T1.java" package ="test.cayenne.auto" value ="1"/>
+         <Value name="removeFromT2s" source ="_T1.java" package ="test.cayenne.auto" value ="1"/>
+         <Value name="setName" source ="_T1.java" package ="test.cayenne.auto" value ="1"/>
+         <Value name="getName" source ="_T2.java" package ="test.cayenne.auto" value ="1"/>
+         <Value name="getT1" source ="_T2.java" package ="test.cayenne.auto" value ="1"/>
+         <Value name="setName" source ="_T2.java" package ="test.cayenne.auto" value ="1"/>
+         <Value name="setT1" source ="_T2.java" package ="test.cayenne.auto" value ="1"/>
+         <Value name="M1" source ="M1.java" package ="test.cayenne" value ="1"/>
+         <Value name="linear1" source ="Main.java" package ="test" value ="1"/>
+         <Value name="linear2" source ="Main.java" package ="test" value ="1"/>
+         <Value name="main" source ="Main.java" package ="test" value ="1"/>
+      </Values>
+   </Metric>
+   <Metric id = "PAR" description ="Number of Parameters" max ="5" hint ="Move invoked method or pass an object">
+      <Values per = "method" avg = "0.647" stddev = "0.478" max = "1">
+         <Value name="addToT2s" source ="_T1.java" package ="test.cayenne.auto" value ="1"/>
+         <Value name="removeFromT2s" source ="_T1.java" package ="test.cayenne.auto" value ="1"/>
+         <Value name="setName" source ="_T1.java" package ="test.cayenne.auto" value ="1"/>
+         <Value name="setName" source ="_T2.java" package ="test.cayenne.auto" value ="1"/>
+         <Value name="setT1" source ="_T2.java" package ="test.cayenne.auto" value ="1"/>
+         <Value name="_500T2s" source ="Main.java" package ="test" value ="1"/>
+         <Value name="linear1" source ="Main.java" package ="test" value ="1"/>
+         <Value name="linear2" source ="Main.java" package ="test" value ="1"/>
+         <Value name="linearAll" source ="Main.java" package ="test" value ="1"/>
+         <Value name="main" source ="Main.java" package ="test" value ="1"/>
+         <Value name="warmup" source ="Main.java" package ="test" value ="1"/>
+         <Value name="getName" source ="_T1.java" package ="test.cayenne.auto" value ="0"/>
+         <Value name="getT2s" source ="_T1.java" package ="test.cayenne.auto" value ="0"/>
+         <Value name="getName" source ="_T2.java" package ="test.cayenne.auto" value ="0"/>
+         <Value name="getT1" source ="_T2.java" package ="test.cayenne.auto" value ="0"/>
+         <Value name="M1" source ="M1.java" package ="test.cayenne" value ="0"/>
+         <Value name="getInstance" source ="M1.java" package ="test.cayenne" value ="0"/>
+      </Values>
+   </Metric>
+   <Metric id = "NBD" description ="Nested Block Depth" max ="5" hint ="use Extract-method to split the method up">
+      <Values per = "method" avg = "1.235" stddev = "0.424" max = "2">
+         <Value name="getInstance" source ="M1.java" package ="test.cayenne" value ="2"/>
+         <Value name="_500T2s" source ="Main.java" package ="test" value ="2"/>
+         <Value name="linearAll" source ="Main.java" package ="test" value ="2"/>
+         <Value name="warmup" source ="Main.java" package ="test" value ="2"/>
+         <Value name="addToT2s" source ="_T1.java" package ="test.cayenne.auto" value ="1"/>
+         <Value name="getName" source ="_T1.java" package ="test.cayenne.auto" value ="1"/>
+         <Value name="getT2s" source ="_T1.java" package ="test.cayenne.auto" value ="1"/>
+         <Value name="removeFromT2s" source ="_T1.java" package ="test.cayenne.auto" value ="1"/>
+         <Value name="setName" source ="_T1.java" package ="test.cayenne.auto" value ="1"/>
+         <Value name="getName" source ="_T2.java" package ="test.cayenne.auto" value ="1"/>
+         <Value name="getT1" source ="_T2.java" package ="test.cayenne.auto" value ="1"/>
+         <Value name="setName" source ="_T2.java" package ="test.cayenne.auto" value ="1"/>
+         <Value name="setT1" source ="_T2.java" package ="test.cayenne.auto" value ="1"/>
+         <Value name="M1" source ="M1.java" package ="test.cayenne" value ="1"/>
+         <Value name="linear1" source ="Main.java" package ="test" value ="1"/>
+         <Value name="linear2" source ="Main.java" package ="test" value ="1"/>
+         <Value name="main" source ="Main.java" package ="test" value ="1"/>
+      </Values>
+   </Metric>
+   <Metric id = "CA" description ="Afferent Coupling">
+      <Values per = "packageFragment" avg = "2" stddev = "1.414" max = "3">
+         <Value name="test.cayenne" package ="test.cayenne" value ="3"/>
+         <Value name="test.cayenne.auto" package ="test.cayenne.auto" value ="3"/>
+         <Value name="(default package)" package ="(default package)" value ="0"/>
+         <Value name="test" package ="test" value ="0"/>
+      </Values>
+   </Metric>
+   <Metric id = "CE" description ="Efferent Coupling">
+      <Values per = "packageFragment" avg = "2" stddev = "0.816" max = "3">
+         <Value name="test.cayenne" package ="test.cayenne" value ="3"/>
+         <Value name="test.cayenne.auto" package ="test.cayenne.auto" value ="2"/>
+         <Value name="test" package ="test" value ="1"/>
+         <Value name="(default package)" package ="(default package)" value ="0"/>
+      </Values>
+   </Metric>
+   <Metric id = "RMI" description ="Instability">
+      <Values per = "packageFragment" avg = "0.633" stddev = "0.262" max = "1">
+         <Value name="(default package)" package ="(default package)" value ="1"/>
+         <Value name="test" package ="test" value ="1"/>
+         <Value name="test.cayenne" package ="test.cayenne" value ="0.5"/>
+         <Value name="test.cayenne.auto" package ="test.cayenne.auto" value ="0.4"/>
+      </Values>
+   </Metric>
+   <Metric id = "RMA" description ="Abstractness">
+      <Values per = "packageFragment" avg = "0.222" stddev = "0.314" max = "0.667">
+         <Value name="test.cayenne.auto" package ="test.cayenne.auto" value ="0.667"/>
+         <Value name="test" package ="test" value ="0"/>
+         <Value name="(default package)" package ="(default package)" value ="�"/>
+         <Value name="test.cayenne" package ="test.cayenne" value ="0"/>
+      </Values>
+   </Metric>
+   <Metric id = "RMD" description ="Normalized Distance">
+      <Values per = "packageFragment" avg = "0.189" stddev = "0.222" max = "0.5">
+         <Value name="test.cayenne.auto" package ="test.cayenne.auto" value ="0.067"/>
+         <Value name="test" package ="test" value ="0"/>
+         <Value name="(default package)" package ="(default package)" value ="�"/>
+         <Value name="test.cayenne" package ="test.cayenne" value ="0.5"/>
+      </Values>
+   </Metric>
+   <Metric id = "DIT" description ="Depth of Inheritance Tree">
+      <Values per = "type" avg = "2.571" stddev = "1.178" max = "4">
+         <Value name="T1" source ="T1.java" package ="test.cayenne" value ="4"/>
+         <Value name="T2" source ="T2.java" package ="test.cayenne" value ="4"/>
+         <Value name="_T1" source ="_T1.java" package ="test.cayenne.auto" value ="3"/>
+         <Value name="_T2" source ="_T2.java" package ="test.cayenne.auto" value ="3"/>
+         <Value name="M1" source ="M1.java" package ="test.cayenne" value ="2"/>
+         <Value name="_M1" source ="_M1.java" package ="test.cayenne.auto" value ="1"/>
+         <Value name="Main" source ="Main.java" package ="test" value ="1"/>
+      </Values>
+   </Metric>
+   <Metric id = "WMC" description ="Weighted methods per Class">
+      <Values per = "type" total = "21" avg = "3" stddev = "3.117" max = "9">
+         <Value name="Main" source ="Main.java" package ="test" value ="9"/>
+         <Value name="_T1" source ="_T1.java" package ="test.cayenne.auto" value ="5"/>
+         <Value name="_T2" source ="_T2.java" package ="test.cayenne.auto" value ="4"/>
+         <Value name="M1" source ="M1.java" package ="test.cayenne" value ="3"/>
+         <Value name="_M1" source ="_M1.java" package ="test.cayenne.auto" value ="0"/>
+         <Value name="T1" source ="T1.java" package ="test.cayenne" value ="0"/>
+         <Value name="T2" source ="T2.java" package ="test.cayenne" value ="0"/>
+      </Values>
+   </Metric>
+   <Metric id = "NSC" description ="Number of Children">
+      <Values per = "type" total = "3" avg = "0.429" stddev = "0.495" max = "1">
+         <Value name="_M1" source ="_M1.java" package ="test.cayenne.auto" value ="1"/>
+         <Value name="_T1" source ="_T1.java" package ="test.cayenne.auto" value ="1"/>
+         <Value name="_T2" source ="_T2.java" package ="test.cayenne.auto" value ="1"/>
+         <Value name="M1" source ="M1.java" package ="test.cayenne" value ="0"/>
+         <Value name="T1" source ="T1.java" package ="test.cayenne" value ="0"/>
+         <Value name="T2" source ="T2.java" package ="test.cayenne" value ="0"/>
+         <Value name="Main" source ="Main.java" package ="test" value ="0"/>
+      </Values>
+   </Metric>
+   <Metric id = "NORM" description ="Number of Overridden Methods">
+      <Values per = "type" total = "0" avg = "0" stddev = "0" max = "0">
+         <Value name="_M1" source ="_M1.java" package ="test.cayenne.auto" value ="0"/>
+         <Value name="_T1" source ="_T1.java" package ="test.cayenne.auto" value ="0"/>
+         <Value name="_T2" source ="_T2.java" package ="test.cayenne.auto" value ="0"/>
+         <Value name="M1" source ="M1.java" package ="test.cayenne" value ="0"/>
+         <Value name="T1" source ="T1.java" package ="test.cayenne" value ="0"/>
+         <Value name="T2" source ="T2.java" package ="test.cayenne" value ="0"/>
+         <Value name="Main" source ="Main.java" package ="test" value ="0"/>
+      </Values>
+   </Metric>
+   <Metric id = "LCOM" description ="Lack of Cohesion of Methods">
+      <Values per = "type" avg = "0" stddev = "0" max = "0">
+         <Value name="_M1" source ="_M1.java" package ="test.cayenne.auto" value ="0"/>
+         <Value name="_T1" source ="_T1.java" package ="test.cayenne.auto" value ="0"/>
+         <Value name="_T2" source ="_T2.java" package ="test.cayenne.auto" value ="0"/>
+         <Value name="M1" source ="M1.java" package ="test.cayenne" value ="0"/>
+         <Value name="T1" source ="T1.java" package ="test.cayenne" value ="0"/>
+         <Value name="T2" source ="T2.java" package ="test.cayenne" value ="0"/>
+         <Value name="Main" source ="Main.java" package ="test" value ="0"/>
+      </Values>
+   </Metric>
+   <Metric id = "NOF" description ="Number of Attributes">
+      <Values per = "type" total = "0" avg = "0" stddev = "0" max = "0">
+         <Value name="_M1" source ="_M1.java" package ="test.cayenne.auto" value ="0"/>
+         <Value name="_T1" source ="_T1.java" package ="test.cayenne.auto" value ="0"/>
+         <Value name="_T2" source ="_T2.java" package ="test.cayenne.auto" value ="0"/>
+         <Value name="M1" source ="M1.java" package ="test.cayenne" value ="0"/>
+         <Value name="T1" source ="T1.java" package ="test.cayenne" value ="0"/>
+         <Value name="T2" source ="T2.java" package ="test.cayenne" value ="0"/>
+         <Value name="Main" source ="Main.java" package ="test" value ="0"/>
+      </Values>
+   </Metric>
+   <Metric id = "NSF" description ="Number of Static Attributes">
+      <Values per = "type" total = "7" avg = "1" stddev = "1.309" max = "3">
+         <Value name="_T1" source ="_T1.java" package ="test.cayenne.auto" value ="3"/>
+         <Value name="_T2" source ="_T2.java" package ="test.cayenne.auto" value ="3"/>
+         <Value name="M1" source ="M1.java" package ="test.cayenne" value ="1"/>
+         <Value name="_M1" source ="_M1.java" package ="test.cayenne.auto" value ="0"/>
+         <Value name="T1" source ="T1.java" package ="test.cayenne" value ="0"/>
+         <Value name="T2" source ="T2.java" package ="test.cayenne" value ="0"/>
+         <Value name="Main" source ="Main.java" package ="test" value ="0"/>
+      </Values>
+   </Metric>
+   <Metric id = "NOM" description ="Number of Methods">
+      <Values per = "type" total = "10" avg = "1.429" stddev = "1.99" max = "5">
+         <Value name="_T1" source ="_T1.java" package ="test.cayenne.auto" value ="5"/>
+         <Value name="_T2" source ="_T2.java" package ="test.cayenne.auto" value ="4"/>
+         <Value name="M1" source ="M1.java" package ="test.cayenne" value ="1"/>
+         <Value name="_M1" source ="_M1.java" package ="test.cayenne.auto" value ="0"/>
+         <Value name="T1" source ="T1.java" package ="test.cayenne" value ="0"/>
+         <Value name="T2" source ="T2.java" package ="test.cayenne" value ="0"/>
+         <Value name="Main" source ="Main.java" package ="test" value ="0"/>
+      </Values>
+   </Metric>
+   <Metric id = "NSM" description ="Number of Static Methods">
+      <Values per = "type" total = "7" avg = "1" stddev = "2.07" max = "6">
+         <Value name="Main" source ="Main.java" package ="test" value ="6"/>
+         <Value name="M1" source ="M1.java" package ="test.cayenne" value ="1"/>
+         <Value name="_M1" source ="_M1.java" package ="test.cayenne.auto" value ="0"/>
+         <Value name="_T1" source ="_T1.java" package ="test.cayenne.auto" value ="0"/>
+         <Value name="_T2" source ="_T2.java" package ="test.cayenne.auto" value ="0"/>
+         <Value name="T1" source ="T1.java" package ="test.cayenne" value ="0"/>
+         <Value name="T2" source ="T2.java" package ="test.cayenne" value ="0"/>
+      </Values>
+   </Metric>
+   <Metric id = "SIX" description ="Specialization Index">
+      <Values per = "type" avg = "0" stddev = "0" max = "0">
+         <Value name="_M1" source ="_M1.java" package ="test.cayenne.auto" value ="0"/>
+         <Value name="_T1" source ="_T1.java" package ="test.cayenne.auto" value ="0"/>
+         <Value name="_T2" source ="_T2.java" package ="test.cayenne.auto" value ="0"/>
+         <Value name="M1" source ="M1.java" package ="test.cayenne" value ="0"/>
+         <Value name="T1" source ="T1.java" package ="test.cayenne" value ="0"/>
+         <Value name="T2" source ="T2.java" package ="test.cayenne" value ="0"/>
+         <Value name="Main" source ="Main.java" package ="test" value ="0"/>
+      </Values>
+   </Metric>
+   <Metric id = "NOC" description ="Number of Classes">
+      <Values per = "packageFragment" total = "7" avg = "2.333" stddev = "0.943" max = "3">
+         <Value name="test.cayenne" package ="test.cayenne" value ="3"/>
+         <Value name="test.cayenne.auto" package ="test.cayenne.auto" value ="3"/>
+         <Value name="test" package ="test" value ="1"/>
+         <Value name="(default package)" package ="(default package)" value ="0"/>
+      </Values>
+   </Metric>
+   <Metric id = "NOI" description ="Number of Interfaces">
+      <Values per = "packageFragment" total = "0" avg = "0" stddev = "0" max = "0">
+         <Value name="(default package)" package ="(default package)" value ="0"/>
+         <Value name="test" package ="test" value ="0"/>
+         <Value name="test.cayenne" package ="test.cayenne" value ="0"/>
+         <Value name="test.cayenne.auto" package ="test.cayenne.auto" value ="0"/>
+      </Values>
+   </Metric>
+   <Metric id = "NOP" description ="Number of Packages">
+      <Value value="3"/>
+   </Metric>
+   <Metric id = "TLOC" description ="Total Lines of Code">
+      <Value value="112"/>
+   </Metric>
+   <Metric id = "MLOC" description ="Method Lines of Code">
+      <Values per = "method" total = "38" avg = "2.235" stddev = "2.389" max = "9">
+         <Value name="_500T2s" source ="Main.java" package ="test" value ="9"/>
+         <Value name="main" source ="Main.java" package ="test" value ="7"/>
+         <Value name="getInstance" source ="M1.java" package ="test.cayenne" value ="4"/>
+         <Value name="linearAll" source ="Main.java" package ="test" value ="4"/>
+         <Value name="warmup" source ="Main.java" package ="test" value ="3"/>
+         <Value name="addToT2s" source ="_T1.java" package ="test.cayenne.auto" value ="1"/>
+         <Value name="getName" source ="_T1.java" package ="test.cayenne.auto" value ="1"/>
+         <Value name="getT2s" source ="_T1.java" package ="test.cayenne.auto" value ="1"/>
+         <Value name="removeFromT2s" source ="_T1.java" package ="test.cayenne.auto" value ="1"/>
+         <Value name="setName" source ="_T1.java" package ="test.cayenne.auto" value ="1"/>
+         <Value name="getName" source ="_T2.java" package ="test.cayenne.auto" value ="1"/>
+         <Value name="getT1" source ="_T2.java" package ="test.cayenne.auto" value ="1"/>
+         <Value name="setName" source ="_T2.java" package ="test.cayenne.auto" value ="1"/>
+         <Value name="setT1" source ="_T2.java" package ="test.cayenne.auto" value ="1"/>
+         <Value name="linear1" source ="Main.java" package ="test" value ="1"/>
+         <Value name="linear2" source ="Main.java" package ="test" value ="1"/>
+         <Value name="M1" source ="M1.java" package ="test.cayenne" value ="0"/>
+      </Values>
+   </Metric>
+   </Metrics>
