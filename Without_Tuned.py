@@ -33,8 +33,8 @@ def data_statistics(dataset):
 def split_dataset(dataset, train_percentage):
     X = dataset.iloc[:, :-1]
     y = dataset.iloc[:, -1].map(lambda x: 'False' if x == 0 else 'True')
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=train_percentage, random_state=42)
-    return X_train, X_test, y_train, y_test
+    train_x, test_x, train_y, test_y = train_test_split(X, y, test_size=train_percentage, random_state=42)
+    return train_x, test_x, train_y, test_y
 
 
 def random_forest(features, target):
@@ -75,7 +75,6 @@ def result_statistics(predictions):
     print("recall score ::", recall_score(test_y, predictions, average='macro'))
     print("f1 score :: ", f1_score(test_y, predictions, average='macro'))
 
-    #
     # precision, recall, fscore, support = score(test_y, predictions)
     # print('precision: {}'.format(precision))
     # print('recall: {}'.format(recall))
@@ -127,6 +126,7 @@ def main():
     # print("Train Accuracy :: ", accuracy_score(train_y, knn.predict(train_x)))
     result_statistics(knn_predictions)
 
+    print("")
     print("--- %s seconds ---" % (time.time() - start_time))
 
 
