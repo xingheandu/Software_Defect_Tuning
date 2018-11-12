@@ -52,27 +52,7 @@ def de_innerloop(output, its, popsize, pop, mut, dimensions, crossp, min_b, diff
                     best = trial_denorm
             lock.release()
         # yield best, fitness[best_idx]
-    output.put("best: {0}, fitness: {1} ".format(best, fitness[best_idx]))
-
-    # for i in range(its // mp.cpu_count()):
-    #     for j in range(popsize):
-    #         idxs = [idx for idx in range(popsize) if idx != j]
-    #         a, b, c = pop[np.random.choice(idxs, 3, replace=False)]
-    #         mutant = np.clip(a + mut * (b - c), 0, 1)
-    #         cross_points = np.random.rand(dimensions) < crossp
-    #         if not np.any(cross_points):
-    #             cross_points[np.random.randint(0, dimensions)] = True
-    #         trial = np.where(cross_points, mutant, pop[j])
-    #         trial_denorm = min_b + trial * diff
-    #         f = fobj(trial_denorm)
-    #         if f < fitness[j]:
-    #             fitness[j] = f
-    #             pop[j] = trial
-    #             if f < fitness[best_idx]:
-    #                 best_idx = j
-    #                 best = trial_denorm
-    #                 output.put(best)
-    #     yield best, fitness[best_idx]
+    output.put("best: {0}, fitness[best_idx]: {1} ".format(best, fitness[best_idx]))
 
 
 def de_sequence(fobj, bounds, mut=0.8, crossp=0.7, popsize=200, its=3000):
@@ -103,12 +83,6 @@ def de_sequence(fobj, bounds, mut=0.8, crossp=0.7, popsize=200, its=3000):
                     best_idx = j
                     best = trial_denorm
         yield best, fitness[best_idx]
-
-
-def rand_num(output):
-    print('Process name {0} with id {1}'.format(mp.current_process().name, os.getpid()))
-    num = random.random()
-    output.put(num)
 
 
 def main():
@@ -165,7 +139,7 @@ def main():
     processes = []
     for x in range(mp.cpu_count()):
         processes.append(mp.Process(target=de_innerloop, args=(
-            output, its, popsize,pop, mut, dimensions, crossp, min_b, diff, lock, fitness, best_idx, best)))
+            output, its, popsize, pop, mut, dimensions, crossp, min_b, diff, lock, fitness, best_idx, best)))
 
     # Run processes
     for p in processes:
