@@ -18,7 +18,7 @@ def fobj(x):
     return value / len(x)
 
 
-def de_initialization(fobj, bounds, popsize=200):
+def de_initialization(fobj, bounds, popsize=60):
     dimensions = len(bounds)
     pop = np.random.rand(popsize, dimensions)
     min_b, max_b = np.asarray(bounds).T
@@ -55,7 +55,7 @@ def de_innerloop(output, its, popsize, pop, mut, dimensions, crossp, min_b, diff
     output.put("best: {0}, fitness[best_idx]: {1} ".format(best, fitness[best_idx]))
 
 
-def de_sequence(fobj, bounds, mut=0.8, crossp=0.7, popsize=200, its=3000):
+def de_sequence(fobj, bounds, mut=0.8, crossp=0.9, popsize=60, its=3000):
     dimensions = len(bounds)
     pop = np.random.rand(popsize, dimensions)
     min_b, max_b = np.asarray(bounds).T
@@ -111,8 +111,8 @@ def main():
     bounds = [(-100, 100)] * 6
     popsize = 200
     mut = 0.8
-    crossp = 0.7
-    popsize = 200
+    crossp = 0.9
+    popsize = 60
     its = 3000
 
     dimensions = len(bounds)
