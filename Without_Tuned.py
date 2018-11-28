@@ -13,7 +13,7 @@ import time
 
 warnings.filterwarnings('ignore')
 
-DATASET_PATH = r"C:\Users\Terry\Documents\Software_Defect_Tuning\testDataset\xerces-1.3.csv"
+DATASET_PATH = r"C:\Users\Terry\Documents\Software_Defect_Tuning\testDataset\xalan-2.6.csv"
 
 
 def read_data(path):
@@ -117,14 +117,14 @@ def main():
     # print("Train Accuracy :: ", accuracy_score(train_y, mlpn.predict(train_x)))
     result_statistics(mlpn_predictions)
 
-    print("")
-    print("----------KNN----------")
-    knn = KNN(train_x, train_y)
-    print("Trained model:", knn)
-
-    knn_predictions = knn.predict(test_x)
-    # print("Train Accuracy :: ", accuracy_score(train_y, knn.predict(train_x)))
-    result_statistics(knn_predictions)
+    # print("")
+    # print("----------KNN----------")
+    # knn = KNN(train_x, train_y)
+    # print("Trained model:", knn)
+    #
+    # knn_predictions = knn.predict(test_x)
+    # # print("Train Accuracy :: ", accuracy_score(train_y, knn.predict(train_x)))
+    # result_statistics(knn_predictions)
 
     print("")
     print("--- %s seconds ---" % (time.time() - start_time))
