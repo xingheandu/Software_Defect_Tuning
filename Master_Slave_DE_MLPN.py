@@ -81,10 +81,10 @@ def de_innerloop(output, its, popsize, pop, mut, dimensions, crossp, min_b, diff
             trial = np.where(cross_points, mutant, pop[j])
             trial_denorm = min_b + trial * diff
             trail_denorm_convert = trial_denorm.tolist()
-            f = rf_tuning(np.int_(np.round_(trail_denorm_convert[0])), np.int_(np.round_(trail_denorm_convert[1])),
-                          np.int_(np.round_(trail_denorm_convert[2])),
-                          np.int_(np.round_(trail_denorm_convert[3])), float('%.2f' % trail_denorm_convert[4]),
-                          np.int_(np.round_(trail_denorm_convert[5])), train_x, test_x, train_y, test_y)
+            f = mlpn_tuning(trail_denorm_convert[0], trail_denorm_convert[1],
+                            trail_denorm_convert[2],
+                            np.int(np.round_(trail_denorm_convert[3])), trail_denorm_convert[4],
+                            np.int(np.round_(trail_denorm_convert[5])), train_x, test_x, train_y, test_y)
 
             lock.acquire()
             # f = fobj(trial_denorm)
@@ -174,14 +174,14 @@ def main():
     #
     # sleep(5)
 
-    print("--- Tuning Random Forest with Parallel DE ---")
-    start_time_rf_tuning_para = time.time()
+    print("--- Tuning Multilayer Perceptron with Parallel DE ---")
+    start_time_mlpn_tuning_para = time.time()
 
     # result_para = list(de_parallel(fobj, bounds=[(-100, 100)] * 6))
     # print(result_para[-1])
 
     # initialization
-    bounds = [(10, 150), (1, 20), (2, 20), (2, 50), (0.01, 1), (1, 10)]
+    bounds = [(0.0001, 0.001), (0.001, 0.01), (0.1, 1), (50, 300), (0.1, 1), (10, 100)]
     mut = 0.8
     crossp = 0.7
     popsize = 60
@@ -202,17 +202,17 @@ def main():
     temp_list = []
 
     for index in pop_denorm_convert:
-        temp_list.append(np.int_(np.round_(index[0])))
-        temp_list.append(np.int_(np.round_(index[1])))
-        temp_list.append(np.int_(np.round_(index[2])))
-        temp_list.append(np.int_(np.round_(index[3])))
-        temp_list.append(float('%.2f' % index[4]))
+        temp_list.append(index[0])
+        temp_list.append(index[1])
+        temp_list.append(index[2])
+        temp_list.append(np.int(np.round_(index[3])))
+        temp_list.append(index[4])
         temp_list.append(np.int(np.round_(index[5])))
         result_list.append(temp_list)
         temp_list = []
 
     fitness = np.asarray(
-        [rf_tuning(index[0], index[1], index[2], index[3], index[4], index[5], train_x, test_x, train_y, test_y)
+        [mlpn_tuning(index[0], index[1], index[2], index[3], index[4], index[5], train_x, test_x, train_y, test_y)
          for index in result_list])
 
     best_idx = np.argmax(fitness)
@@ -250,7 +250,7 @@ def main():
     print(results)
 
     print("")
-    print("--- %s seconds ---" % (time.time() - start_time_rf_tuning_para))
+    print("--- %s seconds ---" % (time.time() - start_time_mlpn_tuning_para))
     print("")
 
 
