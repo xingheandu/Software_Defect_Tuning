@@ -148,8 +148,8 @@ def de_cart(func, bounds, mut=0.8, crossp=0.9, popsize=40, its=100):
             trial = np.where(cross_points, mutant, pop[j])
             trial_denorm = min_b + trial * diff
             trail_denorm_convert = trial_denorm.tolist()
-            f = func(trail_denorm_convert[0],  np.int(np.round_(trail_denorm_convert[1])),
-                      np.int(np.round_(trail_denorm_convert[2])),
+            f = func(trail_denorm_convert[0], np.int(np.round_(trail_denorm_convert[1])),
+                     np.int(np.round_(trail_denorm_convert[2])),
                      np.int(np.round_(trail_denorm_convert[3])))
 
             if f > fitness[j]:
@@ -177,11 +177,11 @@ def rf_tuning(n_estimators, min_samples_leaf, min_samples_split, max_leaf_nodes,
     """
     Define the tuning target function, e.g., to achieve higher precision score in RandomForest
     """
-    rf_tuning = RandomForestClassifier(n_estimators=n_estimators, min_samples_leaf=min_samples_leaf,
-                                       min_samples_split=min_samples_split, max_leaf_nodes=max_leaf_nodes,
-                                       max_features=max_features, max_depth=max_depth)
-    rf_tuning.fit(train_x, train_y)
-    predictions = rf_tuning.predict(test_x)
+    rf_tuned = RandomForestClassifier(n_estimators=n_estimators, min_samples_leaf=min_samples_leaf,
+                                      min_samples_split=min_samples_split, max_leaf_nodes=max_leaf_nodes,
+                                      max_features=max_features, max_depth=max_depth)
+    rf_tuned.fit(train_x, train_y)
+    predictions = rf_tuned.predict(test_x)
     precision = precision_score(test_y, predictions, average="macro")
     return precision
 
@@ -222,10 +222,10 @@ def cart(features, target):
 
 
 def cart_tuning(max_feature, min_sample_split, min_sample_leaf, max_depth):
-    clf = DecisionTreeClassifier(max_features=max_feature, min_samples_split=min_sample_split,
-                                 min_samples_leaf=min_sample_leaf, max_depth=max_depth)
-    clf.fit(train_x, train_y)
-    predictions = clf.predict(test_x)
+    clf_tuned = DecisionTreeClassifier(max_features=max_feature, min_samples_split=min_sample_split,
+                                       min_samples_leaf=min_sample_leaf, max_depth=max_depth)
+    clf_tuned.fit(train_x, train_y)
+    predictions = clf_tuned.predict(test_x)
     precision = precision_score(test_y, predictions, average="macro")
     return precision
 
@@ -271,6 +271,9 @@ def main():
     print("----------Tuning Random Forest----------")
     de_rf_result = list(de_rf(rf_tuning, bounds=[(10, 150), (1, 20), (2, 20), (2, 50), (0.01, 1), (1, 10)]))
     print(de_rf_result[-1])
+    print("")
+    print("--- %s seconds ---" % (time.time() - start_time_rf_de))
+    print("")
 
     # print("")
     # print("----------Multilayer Perceptron----------")
@@ -282,14 +285,9 @@ def main():
     # result_statistics(mlpn_predictions)
     #
 
-    print("")
-    print("--- %s seconds ---" % (time.time() - start_time_rf_de))
-
-    print("")
     start_time_cart_de = time.time()
     print("----------Tuning Decision Tree----------")
-    de_cart_result = list(
-        de_cart(cart_tuning, bounds=[(0.01, 1), (2, 20), (1, 20), (1, 50)]))
+    de_cart_result = list(de_cart(cart_tuning, bounds=[(0.01, 1), (2, 20), (1, 20), (1, 50)]))
     print(de_cart_result[-1])
 
     print("")
