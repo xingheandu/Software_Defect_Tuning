@@ -3,6 +3,7 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn.tree import DecisionTreeClassifier
 from sklearn.neural_network import MLPClassifier
 from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score, classification_report, \
     confusion_matrix
@@ -13,7 +14,7 @@ import time
 
 warnings.filterwarnings('ignore')
 
-DATASET_PATH = r"C:\Users\Terry\Documents\Software_Defect_Tuning\testDataset\prop-5.csv"
+DATASET_PATH = r"C:\Users\Terry\Documents\Software_Defect_Tuning\testDataset\ant-1.3.csv"
 
 
 def read_data(path):
@@ -37,7 +38,7 @@ def split_dataset(dataset, train_percentage):
     return train_x, test_x, train_y, test_y
 
 
-def de_rf(func, bounds, mut=0.8, crossp=0.7, popsize=60, its=200):
+def de_rf(func, bounds, mut=0.8, crossp=0.9, popsize=60, its=100):
     dimensions = len(bounds)
     pop = np.random.rand(popsize, dimensions)
 
@@ -100,7 +101,7 @@ def de_rf(func, bounds, mut=0.8, crossp=0.7, popsize=60, its=200):
         yield best, fitness[best_idx]
 
 
-def de_mlpn(func, bounds, mut=0.8, crossp=0.7, popsize=60, its=200):
+def de_cart(func, bounds, mut=0.8, crossp=0.9, popsize=40, its=100):
     dimensions = len(bounds)
     pop = np.random.rand(popsize, dimensions)
 
@@ -117,15 +118,13 @@ def de_mlpn(func, bounds, mut=0.8, crossp=0.7, popsize=60, its=200):
 
     for index in pop_denorm_convert:
         temp_list.append(index[0])
-        temp_list.append(index[1])
-        temp_list.append(index[2])
-        temp_list.append(np.int(np.round_(index[3])))
-        temp_list.append(index[4])
-        temp_list.append(np.int(np.round_(index[5])))
+        temp_list.append(np.int_(np.round_(index[1])))
+        temp_list.append(np.int_(np.round_(index[2])))
+        temp_list.append(np.int_(np.round_(index[3])))
         result_list.append(temp_list)
         temp_list = []
 
-    fitness = np.asarray([func(index[0], index[1], index[2], index[3], index[4], index[5])
+    fitness = np.asarray([func(index[0], index[1], index[2], index[3])
                           for index in result_list])
 
     best_idx = np.argmax(fitness)
@@ -149,10 +148,9 @@ def de_mlpn(func, bounds, mut=0.8, crossp=0.7, popsize=60, its=200):
             trial = np.where(cross_points, mutant, pop[j])
             trial_denorm = min_b + trial * diff
             trail_denorm_convert = trial_denorm.tolist()
-            f = func(trail_denorm_convert[0], trail_denorm_convert[1],
-                     trail_denorm_convert[2],
-                     np.int(np.round_(trail_denorm_convert[3])), trail_denorm_convert[4],
-                     np.int(np.round_(trail_denorm_convert[5])))
+            f = func(trail_denorm_convert[0], np.int(np.round_(trail_denorm_convert[1])),
+                     np.int(np.round_(trail_denorm_convert[2])),
+                     np.int(np.round_(trail_denorm_convert[3])))
 
             if f > fitness[j]:
                 fitness[j] = f
@@ -179,36 +177,57 @@ def rf_tuning(n_estimators, min_samples_leaf, min_samples_split, max_leaf_nodes,
     """
     Define the tuning target function, e.g., to achieve higher precision score in RandomForest
     """
-    rf_tuning = RandomForestClassifier(n_estimators=n_estimators, min_samples_leaf=min_samples_leaf,
-                                       min_samples_split=min_samples_split, max_leaf_nodes=max_leaf_nodes,
-                                       max_features=max_features, max_depth=max_depth)
-    rf_tuning.fit(train_x, train_y)
-    predictions = rf_tuning.predict(test_x)
-    recall = recall_score(test_y, predictions, average="macro")
-    return recall
+    rf_tuned = RandomForestClassifier(n_estimators=n_estimators, min_samples_leaf=min_samples_leaf,
+                                      min_samples_split=min_samples_split, max_leaf_nodes=max_leaf_nodes,
+                                      max_features=max_features, max_depth=max_depth)
+    rf_tuned.fit(train_x, train_y)
+    predictions = rf_tuned.predict(test_x)
+    f1 = f1_score(test_y, predictions, average="macro")
+    return f1
 
 
-def multilayer_perceptron(features, target):
-    # mlpn = MLPClassifier(activation='relu', alpha=1e-05, batch_size='auto',
-    #                      beta_1=0.9, beta_2=0.999, early_stopping=False,
-    #                      epsilon=1e-08, hidden_layer_sizes=(5, 2),
-    #                      learning_rate='constant', learning_rate_init=0.001,
-    #                      max_iter=200, momentum=0.9, n_iter_no_change=10,
-    #                      nesterovs_momentum=True, power_t=0.5, random_state=1,
-    #                      shuffle=True, solver='lbfgs', tol=0.0001,
-    #                      validation_fraction=0.1, verbose=False, warm_start=False)
-    mlpn = MLPClassifier()
-    mlpn.fit(features, target)
-    return mlpn
+# def multilayer_perceptron(features, target):
+#     # mlpn = MLPClassifier(activation='relu', alpha=1e-05, batch_size='auto',
+#     #                      beta_1=0.9, beta_2=0.999, early_stopping=False,
+#     #                      epsilon=1e-08, hidden_layer_sizes=(5, 2),
+#     #                      learning_rate='constant', learning_rate_init=0.001,
+#     #                      max_iter=200, momentum=0.9, n_iter_no_change=10,
+#     #                      nesterovs_momentum=True, power_t=0.5, random_state=1,
+#     #                      shuffle=True, solver='lbfgs', tol=0.0001,
+#     #                      validation_fraction=0.1, verbose=False, warm_start=False)
+#     mlpn = MLPClassifier()
+#     mlpn.fit(features, target)
+#     return mlpn
+#
+#
+# def mlpn_tuning(alpha, learning_rate_init, power_t, max_iter, momentum, n_iter_no_change):
+#     mlpn = MLPClassifier(alpha=alpha, learning_rate_init=learning_rate_init, power_t=power_t, max_iter=max_iter,
+#                          momentum=momentum, n_iter_no_change=n_iter_no_change, solver="sgd")
+#     mlpn.fit(train_x, train_y)
+#     predictions = mlpn.predict(test_x)
+#     recall = recall_score(test_y, predictions, average="macro")
+#     return recall
 
 
-def mlpn_tuning(alpha, learning_rate_init, power_t, max_iter, momentum, n_iter_no_change):
-    mlpn = MLPClassifier(alpha=alpha, learning_rate_init=learning_rate_init, power_t=power_t, max_iter=max_iter,
-                         momentum=momentum, n_iter_no_change=n_iter_no_change, solver="sgd")
-    mlpn.fit(train_x, train_y)
-    predictions = mlpn.predict(test_x)
-    recall = recall_score(test_y, predictions, average="macro")
-    return recall
+def cart(features, target):
+    # clf = DecisionTreeClassifier(class_weight=None, criterion='gini', max_depth=None,
+    #         max_features=None, max_leaf_nodes=None,
+    #         min_impurity_decrease=0.0, min_impurity_split=None,
+    #         min_samples_leaf=1, min_samples_split=2,
+    #         min_weight_fraction_leaf=0.0, presort=False, random_state=None,
+    #         splitter='best')
+    clf = DecisionTreeClassifier()
+    clf.fit(features, target)
+    return clf
+
+
+def cart_tuning(max_feature, min_sample_split, min_sample_leaf, max_depth):
+    clf_tuned = DecisionTreeClassifier(max_features=max_feature, min_samples_split=min_sample_split,
+                                       min_samples_leaf=min_sample_leaf, max_depth=max_depth)
+    clf_tuned.fit(train_x, train_y)
+    predictions = clf_tuned.predict(test_x)
+    f1 = f1_score(test_y, predictions, average="macro")
+    return f1
 
 
 def result_statistics(predictions):
@@ -252,6 +271,9 @@ def main():
     print("----------Tuning Random Forest----------")
     de_rf_result = list(de_rf(rf_tuning, bounds=[(10, 150), (1, 20), (2, 20), (2, 50), (0.01, 1), (1, 10)]))
     print(de_rf_result[-1])
+    print("")
+    print("--- %s seconds ---" % (time.time() - start_time_rf_de))
+    print("")
 
     # print("")
     # print("----------Multilayer Perceptron----------")
@@ -263,18 +285,13 @@ def main():
     # result_statistics(mlpn_predictions)
     #
 
-    print("")
-    print("--- %s seconds ---" % (time.time() - start_time_rf_de))
+    start_time_cart_de = time.time()
+    print("----------Tuning Decision Tree----------")
+    de_cart_result = list(de_cart(cart_tuning, bounds=[(0.01, 1), (2, 20), (1, 20), (1, 50)]))
+    print(de_cart_result[-1])
 
     print("")
-    start_time_mlpn_de = time.time()
-    print("----------Tuning Multilayer Perceptron----------")
-    de_mlpn_result = list(
-        de_mlpn(mlpn_tuning, bounds=[(0.0001, 0.001), (0.001, 0.01), (0.1, 1), (50, 300), (0.1, 1), (10, 100)]))
-    print(de_mlpn_result[-1])
-
-    print("")
-    print("--- %s seconds ---" % (time.time() - start_time_mlpn_de))
+    print("--- %s seconds ---" % (time.time() - start_time_cart_de))
 
 
 if __name__ == "__main__":
