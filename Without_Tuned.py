@@ -3,7 +3,7 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.neural_network import MLPClassifier
+from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score, classification_report, \
     confusion_matrix
 from sklearn.metrics import precision_recall_fscore_support as score
@@ -49,25 +49,23 @@ def random_forest(features, target):
     return rf
 
 
-def multilayer_perceptron(features, target):
-    # mlpn = MLPClassifier(activation='relu', alpha=1e-05, batch_size='auto',
-    #                      beta_1=0.9, beta_2=0.999, early_stopping=False,
-    #                      epsilon=1e-08, hidden_layer_sizes=(5, 2),
-    #                      learning_rate='constant', learning_rate_init=0.001,
-    #                      max_iter=200, momentum=0.9, n_iter_no_change=10,
-    #                      nesterovs_momentum=True, power_t=0.5, random_state=1,
-    #                      shuffle=True, solver='lbfgs', tol=0.0001,
-    #                      validation_fraction=0.1, verbose=False, warm_start=False)
-    mlpn = MLPClassifier()
-    mlpn.fit(features, target)
-    return mlpn
+def cart(features, target):
+    # clf = DecisionTreeClassifier(class_weight=None, criterion='gini', max_depth=None,
+    #         max_features=None, max_leaf_nodes=None,
+    #         min_impurity_decrease=0.0, min_impurity_split=None,
+    #         min_samples_leaf=1, min_samples_split=2,
+    #         min_weight_fraction_leaf=0.0, presort=False, random_state=None,
+    #         splitter='best')
+    clf = DecisionTreeClassifier()
+    clf.fit(features, target)
+    return clf
 
 
-def KNN(features, target):
-    # knn = KNeighborsClassifier(n_neighbors=1, p=2, metric='minkowski')
-    knn = KNeighborsClassifier(n_neighbors=1)
-    knn.fit(features, target)
-    return knn
+# def KNN(features, target):
+#     # knn = KNeighborsClassifier(n_neighbors=1, p=2, metric='minkowski')
+#     knn = KNeighborsClassifier(n_neighbors=1)
+#     knn.fit(features, target)
+#     return knn
 
 
 def result_statistics(predictions):
@@ -109,13 +107,13 @@ def main():
     result_statistics(rf_predictions)
 
     print("")
-    print("----------Multilayer Perceptron----------")
-    mlpn = multilayer_perceptron(train_x, train_y)
-    print("Trained model:", mlpn)
+    print("----------Decision Tree----------")
+    dt = cart(train_x, train_y)
+    print("Trained model:", dt)
 
-    mlpn_predictions = mlpn.predict(test_x)
+    dt_predictions = dt.predict(test_x)
     # print("Train Accuracy :: ", accuracy_score(train_y, mlpn.predict(train_x)))
-    result_statistics(mlpn_predictions)
+    result_statistics(dt_predictions)
 
     # print("")
     # print("----------KNN----------")

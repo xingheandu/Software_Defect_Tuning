@@ -37,7 +37,7 @@ def split_dataset(dataset, train_percentage):
     return train_x, test_x, train_y, test_y
 
 
-def de_rf(func, bounds, mut=0.8, crossp=0.7, popsize=60, its=200):
+def de_rf(func, bounds, mut=0.8, crossp=0.7, popsize=60, its=100):
     dimensions = len(bounds)
     pop = np.random.rand(popsize, dimensions)
 
