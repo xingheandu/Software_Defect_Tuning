@@ -288,9 +288,9 @@ def main():
     print("")
     start_time_cart_de = time.time()
     print("----------Tuning Decision Tree----------")
-    de_mlpn_result = list(
+    de_cart_result = list(
         de_cart(cart_tuning, bounds=[(0.01, 1), (2, 20), (1, 20), (1, 50)]))
-    print(de_mlpn_result[-1])
+    print(de_cart_result[-1])
 
     print("")
     print("--- %s seconds ---" % (time.time() - start_time_cart_de))
