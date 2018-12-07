@@ -139,18 +139,18 @@ def rf_tuning(n_estimators, min_samples_leaf, min_samples_split, max_leaf_nodes,
                                        max_features=max_features, max_depth=max_depth)
     rf_tuning.fit(train_x, train_y)
     predictions = rf_tuning.predict(test_x)
-    recall = recall_score(test_y, predictions, average="macro")
-    return recall
+    precision = precision_score(test_y, predictions, average="macro")
+    return precision
 
 
-def mlpn_tuning(alpha, learning_rate_init, power_t, max_iter, momentum, n_iter_no_change, train_x, test_x, train_y,
-                test_y):
-    mlpn = MLPClassifier(alpha=alpha, learning_rate_init=learning_rate_init, power_t=power_t, max_iter=max_iter,
-                         momentum=momentum, n_iter_no_change=n_iter_no_change, solver="sgd")
-    mlpn.fit(train_x, train_y)
-    predictions = mlpn.predict(test_x)
-    recall = recall_score(test_y, predictions, average="macro")
-    return recall
+# def mlpn_tuning(alpha, learning_rate_init, power_t, max_iter, momentum, n_iter_no_change, train_x, test_x, train_y,
+#                 test_y):
+#     mlpn = MLPClassifier(alpha=alpha, learning_rate_init=learning_rate_init, power_t=power_t, max_iter=max_iter,
+#                          momentum=momentum, n_iter_no_change=n_iter_no_change, solver="sgd")
+#     mlpn.fit(train_x, train_y)
+#     predictions = mlpn.predict(test_x)
+#     recall = recall_score(test_y, predictions, average="macro")
+#     return recall
 
 
 def main():
@@ -183,7 +183,7 @@ def main():
     # initialization
     bounds = [(10, 150), (1, 20), (2, 20), (2, 50), (0.01, 1), (1, 10)]
     mut = 0.8
-    crossp = 0.7
+    crossp = 0.9
     popsize = 60
     its = 100
 
@@ -218,15 +218,15 @@ def main():
     best_idx = np.argmax(fitness)
     best = pop_denorm[best_idx]
 
-    print("Dimension:", dimensions)
-    print("pop:", pop)
-    print("min_b:", min_b)
-    print("max_b:", max_b)
-    print("diff:", diff)
-    print("pop_denorm:", pop_denorm)
-    print("fitness:", fitness)
-    print("best_idx:", best_idx)
-    print("best:", best)
+    # print("Dimension:", dimensions)
+    # print("pop:", pop)
+    # print("min_b:", min_b)
+    # print("max_b:", max_b)
+    # print("diff:", diff)
+    # print("pop_denorm:", pop_denorm)
+    # print("fitness:", fitness)
+    # print("best_idx:", best_idx)
+    # print("best:", best)
 
     lock = mp.Lock()
     # execute loops in each process
