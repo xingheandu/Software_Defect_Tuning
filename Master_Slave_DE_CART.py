@@ -192,15 +192,15 @@ def main():
     best_idx = np.argmax(fitness)
     best = pop_denorm[best_idx]
 
-    print("Dimension:", dimensions)
-    print("pop:", pop)
-    print("min_b:", min_b)
-    print("max_b:", max_b)
-    print("diff:", diff)
-    print("pop_denorm:", pop_denorm)
-    print("fitness:", fitness)
-    print("best_idx:", best_idx)
-    print("best:", best)
+    # print("Dimension:", dimensions)
+    # print("pop:", pop)
+    # print("min_b:", min_b)
+    # print("max_b:", max_b)
+    # print("diff:", diff)
+    # print("pop_denorm:", pop_denorm)
+    # print("fitness:", fitness)
+    # print("best_idx:", best_idx)
+    # print("best:", best)
 
     lock = mp.Lock()
     # execute loops in each process
