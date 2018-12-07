@@ -134,11 +134,11 @@ def rf_tuning(n_estimators, min_samples_leaf, min_samples_split, max_leaf_nodes,
     """
     Define the tuning target function, e.g., to achieve higher precision score in RandomForest
     """
-    rf_tuning = RandomForestClassifier(n_estimators=n_estimators, min_samples_leaf=min_samples_leaf,
+    rf_tuned = RandomForestClassifier(n_estimators=n_estimators, min_samples_leaf=min_samples_leaf,
                                        min_samples_split=min_samples_split, max_leaf_nodes=max_leaf_nodes,
                                        max_features=max_features, max_depth=max_depth)
-    rf_tuning.fit(train_x, train_y)
-    predictions = rf_tuning.predict(test_x)
+    rf_tuned.fit(train_x, train_y)
+    predictions = rf_tuned.predict(test_x)
     precision = precision_score(test_y, predictions, average="macro")
     return precision
 
