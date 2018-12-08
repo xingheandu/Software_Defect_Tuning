@@ -230,35 +230,36 @@ def main():
     print("sub_pop:", sub_pop)
     print("sub_pop_array", sub_pop_array)
 
-    sub_population = []
-    sub_population_index = []
-    sub_population_fitness = []
-    for i in sorted(random.sample(range(len(result_list)), 8)):
-        sub_population_index.append(i)
-        sub_population.append(result_list[i])
-        sub_population_fitness.append(fitness[i])
-
-    # [result_list[i] for i in sorted(random.sample(range(len(result_list)), 8))]
-    print("subpopulation:", sub_population)
-    print("subpopulation_index", sub_population_index)
-    print("subpopulation_fitness", sub_population_fitness)
-
-    best_index_subpopulation = np.argmax(sub_population_fitness)
-    best_subpopulation = sub_population_fitness[best_index_subpopulation]
-    worst_index_subpopulation = np.argmin(sub_population_fitness)
-    worst_subpopulation = sub_population_fitness[worst_index_subpopulation]
-
-    print("best index of subpopulation:", best_index_subpopulation)
-    print("best of subpopulation", best_subpopulation)
-    print("worst index of subpopulation:", worst_index_subpopulation)
-    print("worst of subpopulation", worst_subpopulation)
-
-    sub_population_size = len(sub_population)
-    print("sub_population_size:", sub_population_size)
+    # sub_population = []
+    # sub_population_index = []
+    # sub_population_fitness = []
+    # for i in sorted(random.sample(range(len(result_list)), 8)):
+    #     sub_population_index.append(i)
+    #     sub_population.append(result_list[i])
+    #     sub_population_fitness.append(fitness[i])
+    #
+    # # [result_list[i] for i in sorted(random.sample(range(len(result_list)), 8))]
+    # print("subpopulation:", sub_population)
+    # print("subpopulation_index", sub_population_index)
+    # print("subpopulation_fitness", sub_population_fitness)
+    #
+    # best_index_subpopulation = np.argmax(sub_population_fitness)
+    # best_subpopulation = sub_population_fitness[best_index_subpopulation]
+    # worst_index_subpopulation = np.argmin(sub_population_fitness)
+    # worst_subpopulation = sub_population_fitness[worst_index_subpopulation]
+    #
+    # print("best index of subpopulation:", best_index_subpopulation)
+    # print("best of subpopulation", best_subpopulation)
+    # print("worst index of subpopulation:", worst_index_subpopulation)
+    # print("worst of subpopulation", worst_subpopulation)
+    #
+    # sub_population_size = len(sub_population)
+    # print("sub_population_size:", sub_population_size)
 
     # ------------------------within one iteration of subpopulation---------------------------
 
-
+    sub_population = []
+    sub_population_fitnesss = []
 
     for j in range(len(sub_pop)):  # j: 0~7
         print("j:", j)
@@ -299,8 +300,27 @@ def main():
                       np.int_(np.round_(trail_denorm_convert[5])), train_x, test_x, train_y, test_y)
 
         print("f:", f)
+        sub_population.append(trial_denorm)
+        sub_population_fitnesss.append(f)
 
+    print("sub_population:", np.asarray(sub_population))
+    print("sub_population_fitness", sub_population_fitnesss)
 
+    best_sub_index = np.argmax(sub_population_fitnesss)
+    best_sub = sub_population[best_sub_index]
+    best_sub_fitness = sub_population_fitnesss[best_sub_index]
+
+    print("best_sub_index", best_sub_index)
+    print("best_sub", best_sub)
+    print("best_sub_fitness", best_sub_fitness)
+
+    worst_sub_index = np.argmin(sub_population_fitnesss)
+    worst_sub = sub_population[worst_sub_index]
+    worst_sub_fitness = sub_population_fitnesss[worst_sub_index]
+
+    print("worst_sub_index", worst_sub_index)
+    print("worst_sub", worst_sub)
+    print("worst_sub_fitness", worst_sub_fitness)
 
     print("out of each core")
 
