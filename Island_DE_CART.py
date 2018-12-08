@@ -300,6 +300,15 @@ def main():
                       np.int_(np.round_(trail_denorm_convert[5])), train_x, test_x, train_y, test_y)
 
         print("f:", f)
+
+        # compare with global best result
+        if f > fitness[j]:
+            fitness[j] = f
+            pop[j] = trial
+            if f > fitness[best_idx]:
+                best_idx = j
+                best = trial_denorm
+
         sub_population.append(trial_denorm)
         sub_population_fitnesss.append(f)
 
@@ -322,9 +331,8 @@ def main():
     print("worst_sub", worst_sub)
     print("worst_sub_fitness", worst_sub_fitness)
 
-    print("out of each core")
-
     # ----------------------------------------------------------------------------------
+    print("out of each core")
     lock = mp.Lock()
     # execute loops in each process
     processes = []
