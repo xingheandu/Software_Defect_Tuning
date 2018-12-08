@@ -9,7 +9,7 @@ from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_sc
 from sklearn.metrics import precision_recall_fscore_support as score
 import warnings
 import sklearn.metrics as metrics
-import time
+import time_RF
 
 warnings.filterwarnings('ignore')
 
@@ -81,7 +81,7 @@ def result_statistics(predictions):
 
 
 def main():
-    start_time = time.time()
+    start_time = time_RF.time()
 
     dataset = read_data(DATASET_PATH)
 
@@ -125,7 +125,7 @@ def main():
     # result_statistics(knn_predictions)
 
     print("")
-    print("--- %s seconds ---" % (time.time() - start_time))
+    print("--- %s seconds ---" % (time_RF.time() - start_time))
 
 
 if __name__ == "__main__":

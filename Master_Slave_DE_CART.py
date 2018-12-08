@@ -1,7 +1,7 @@
 import multiprocessing as mp
 import pandas as pd
-import random, time
-from time import sleep
+import random, time_RF
+from time_RF import sleep
 import numpy as np
 import platform
 import logging, os
@@ -154,7 +154,7 @@ def main():
     # sleep(5)
 
     print("--- Tuning Decision Tree with Parallel DE ---")
-    start_time_cart_tuning_para = time.time()
+    start_time_cart_tuning_para = time_RF.time()
 
     # initialization
     bounds = [(0.01, 1), (2, 20), (1, 20), (1, 50)]
@@ -224,7 +224,7 @@ def main():
     print(results)
 
     print("")
-    print("--- %s seconds ---" % (time.time() - start_time_cart_tuning_para))
+    print("--- %s seconds ---" % (time_RF.time() - start_time_cart_tuning_para))
     print("")
 
 

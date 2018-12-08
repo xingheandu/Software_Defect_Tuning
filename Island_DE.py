@@ -1,6 +1,6 @@
 import multiprocessing as mp
-import random, time
-from time import sleep
+import random, time_RF
+from time_RF import sleep
 import numpy as np
 import platform
 import logging, os
@@ -160,13 +160,13 @@ def main():
     # print(parent_conn.recv())
     # proc.join()
 
-    start_time_sequence = time.time()
+    start_time_sequence = time_RF.time()
     print("--- Testing Sequence DE ---")
     result_sequence = list(de_sequence(fobj, bounds=[(-100, 100)] * 6, its=3000))
     print(result_sequence[-1])
 
     print("")
-    print("--- %s seconds ---" % (time.time() - start_time_sequence))
+    print("--- %s seconds ---" % (time_RF.time() - start_time_sequence))
 
 
 if __name__ == "__main__":

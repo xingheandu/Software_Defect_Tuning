@@ -1,4 +1,4 @@
-import time
+import time_RF
 import threading
 
 
@@ -9,14 +9,14 @@ def t():
 
 
 if __name__ == '__main__':
-    start_time = time.time()
+    start_time = time_RF.time()
     t()
     t()
     t()
     t()
-    print("Sequential run time: %.2f seconds" % (time.time() - start_time))
+    print("Sequential run time: %.2f seconds" % (time_RF.time() - start_time))
 
-    start_time = time.time()
+    start_time = time_RF.time()
     t1 = threading.Thread(target=t)
     t2 = threading.Thread(target=t)
     t3 = threading.Thread(target=t)
@@ -29,4 +29,4 @@ if __name__ == '__main__':
     t2.join()
     t3.join()
     t4.join()
-    print("Parallel run time: %.2f seconds" % (time.time() - start_time))
+    print("Parallel run time: %.2f seconds" % (time_RF.time() - start_time))

@@ -10,11 +10,11 @@ from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_sc
 from sklearn.metrics import precision_recall_fscore_support as score
 import warnings
 import sklearn.metrics as metrics
-import time
+import time_RF
 
 warnings.filterwarnings('ignore')
 
-DATASET_PATH = r"C:\Users\Terry\Documents\Software_Defect_Tuning\testDataset\ant-1.3.csv"
+DATASET_PATH = r"C:\Users\Terry\Documents\Software_Defect_Tuning\testDataset\xalan-2.6.csv"
 
 
 def read_data(path):
@@ -266,13 +266,13 @@ def main():
     # # print("Train Accuracy :: ", accuracy_score(train_y, rf.predict(train_x)))
     # result_statistics(rf_predictions)
 
-    start_time_rf_de = time.time()
+    start_time_rf_de = time_RF.time()
     print("")
     print("----------Tuning Random Forest----------")
     de_rf_result = list(de_rf(rf_tuning, bounds=[(10, 150), (1, 20), (2, 20), (2, 50), (0.01, 1), (1, 10)]))
     print(de_rf_result[-1])
     print("")
-    print("--- %s seconds ---" % (time.time() - start_time_rf_de))
+    print("--- %s seconds ---" % (time_RF.time() - start_time_rf_de))
     print("")
 
     # print("")
@@ -285,13 +285,13 @@ def main():
     # result_statistics(mlpn_predictions)
     #
 
-    start_time_cart_de = time.time()
+    start_time_cart_de = time_RF.time()
     print("----------Tuning Decision Tree----------")
     de_cart_result = list(de_cart(cart_tuning, bounds=[(0.01, 1), (2, 20), (1, 20), (1, 50)]))
     print(de_cart_result[-1])
 
     print("")
-    print("--- %s seconds ---" % (time.time() - start_time_cart_de))
+    print("--- %s seconds ---" % (time_RF.time() - start_time_cart_de))
 
 
 if __name__ == "__main__":

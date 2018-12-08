@@ -1,7 +1,7 @@
 import multiprocessing as mp
 import pandas as pd
-import random, time
-from time import sleep
+import random, time_RF
+from time_RF import sleep
 import numpy as np
 import platform
 import logging, os
@@ -175,7 +175,7 @@ def main():
     # sleep(5)
 
     print("--- Tuning Multilayer Perceptron with Parallel DE ---")
-    start_time_mlpn_tuning_para = time.time()
+    start_time_mlpn_tuning_para = time_RF.time()
 
     # result_para = list(de_parallel(fobj, bounds=[(-100, 100)] * 6))
     # print(result_para[-1])
@@ -250,7 +250,7 @@ def main():
     print(results)
 
     print("")
-    print("--- %s seconds ---" % (time.time() - start_time_mlpn_tuning_para))
+    print("--- %s seconds ---" % (time_RF.time() - start_time_mlpn_tuning_para))
     print("")
 
 
