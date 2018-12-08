@@ -42,22 +42,22 @@ def split_dataset(dataset, train_percentage):
     return train_x, test_x, train_y, test_y
 
 
-def de_initialization(fobj, bounds, popsize=60):
-    dimensions = len(bounds)
-    pop = np.random.rand(popsize, dimensions)
-    min_b, max_b = np.asarray(bounds).T
-    diff = np.fabs(min_b - max_b)
-    pop_denorm = min_b + pop * diff
-    fitness = np.asarray([fobj(ind) for ind in pop_denorm])
-    best_idx = np.argmin(fitness)
-    best = pop_denorm[best_idx]
-    return dimensions, pop, min_b, diff, best, best_idx, fitness
+# def de_initialization(fobj, bounds, popsize=60):
+#     dimensions = len(bounds)
+#     pop = np.random.rand(popsize, dimensions)
+#     min_b, max_b = np.asarray(bounds).T
+#     diff = np.fabs(min_b - max_b)
+#     pop_denorm = min_b + pop * diff
+#     fitness = np.asarray([fobj(ind) for ind in pop_denorm])
+#     best_idx = np.argmin(fitness)
+#     best = pop_denorm[best_idx]
+#     return dimensions, pop, min_b, diff, best, best_idx, fitness
 
 
 def de_innerloop(output, its, popsize, pop, mut, dimensions, crossp, min_b, diff, lock, fitness, best_idx, best,
                  train_x, test_x, train_y, test_y):
-    for i in range(its // mp.cpu_count()):
-        for j in range(popsize):
+    for i in range(its):
+        for j in range(popsize // mp.cpu_count()):
             idxs = [idx for idx in range(popsize) if idx != j]
             a, b, c = pop[np.random.choice(idxs, 3, replace=False)]
             mutant = a + mut * (b - c)
@@ -92,34 +92,34 @@ def de_innerloop(output, its, popsize, pop, mut, dimensions, crossp, min_b, diff
     output.put("best: {0}, fitness[best_idx]: {1} ".format(best, fitness[best_idx]))
 
 
-def de_sequence(fobj, bounds, mut=0.8, crossp=0.9, popsize=60, its=3000):
-    dimensions = len(bounds)
-    pop = np.random.rand(popsize, dimensions)
-    min_b, max_b = np.asarray(bounds).T
-    diff = np.fabs(min_b - max_b)
-    pop_denorm = min_b + pop * diff
-    fitness = np.asarray([fobj(ind) for ind in pop_denorm])
-    best_idx = np.argmin(fitness)
-    best = pop_denorm[best_idx]
-
-    for i in range(its):
-        for j in range(popsize):
-            idxs = [idx for idx in range(popsize) if idx != j]
-            a, b, c = pop[np.random.choice(idxs, 3, replace=False)]
-            mutant = np.clip(a + mut * (b - c), 0, 1)
-            cross_points = np.random.rand(dimensions) < crossp
-            if not np.any(cross_points):
-                cross_points[np.random.randint(0, dimensions)] = True
-            trial = np.where(cross_points, mutant, pop[j])
-            trial_denorm = min_b + trial * diff
-            f = fobj(trial_denorm)
-            if f < fitness[j]:
-                fitness[j] = f
-                pop[j] = trial
-                if f < fitness[best_idx]:
-                    best_idx = j
-                    best = trial_denorm
-        yield best, fitness[best_idx]
+# def de_sequence(fobj, bounds, mut=0.8, crossp=0.9, popsize=60, its=3000):
+#     dimensions = len(bounds)
+#     pop = np.random.rand(popsize, dimensions)
+#     min_b, max_b = np.asarray(bounds).T
+#     diff = np.fabs(min_b - max_b)
+#     pop_denorm = min_b + pop * diff
+#     fitness = np.asarray([fobj(ind) for ind in pop_denorm])
+#     best_idx = np.argmin(fitness)
+#     best = pop_denorm[best_idx]
+#
+#     for i in range(its):
+#         for j in range(popsize):
+#             idxs = [idx for idx in range(popsize) if idx != j]
+#             a, b, c = pop[np.random.choice(idxs, 3, replace=False)]
+#             mutant = np.clip(a + mut * (b - c), 0, 1)
+#             cross_points = np.random.rand(dimensions) < crossp
+#             if not np.any(cross_points):
+#                 cross_points[np.random.randint(0, dimensions)] = True
+#             trial = np.where(cross_points, mutant, pop[j])
+#             trial_denorm = min_b + trial * diff
+#             f = fobj(trial_denorm)
+#             if f < fitness[j]:
+#                 fitness[j] = f
+#                 pop[j] = trial
+#                 if f < fitness[best_idx]:
+#                     best_idx = j
+#                     best = trial_denorm
+#         yield best, fitness[best_idx]
 
 
 def rf_tuning(n_estimators, min_samples_leaf, min_samples_split, max_leaf_nodes, max_features, max_depth, train_x,
@@ -168,7 +168,7 @@ def main():
     # sleep(5)
 
     print("--- Tuning Random Forest with Parallel DE ---")
-    start_time_rf_tuning_para = time_RF.time()
+    start_time_rf_tuning_para = time.time()
 
     # result_para = list(de_parallel(fobj, bounds=[(-100, 100)] * 6))
     # print(result_para[-1])
@@ -211,15 +211,15 @@ def main():
     best_idx = np.argmax(fitness)
     best = pop_denorm[best_idx]
 
-    # print("Dimension:", dimensions)
-    # print("pop:", pop)
-    # print("min_b:", min_b)
-    # print("max_b:", max_b)
-    # print("diff:", diff)
-    # print("pop_denorm:", pop_denorm)
-    # print("fitness:", fitness)
-    # print("best_idx:", best_idx)
-    # print("best:", best)
+    print("Dimension:", dimensions)
+    print("pop:", pop)
+    print("min_b:", min_b)
+    print("max_b:", max_b)
+    print("diff:", diff)
+    print("pop_denorm:", pop_denorm)
+    print("fitness:", fitness)
+    print("best_idx:", best_idx)
+    print("best:", best)
 
     lock = mp.Lock()
     # execute loops in each process
@@ -243,7 +243,7 @@ def main():
     print(results)
 
     print("")
-    print("--- %s seconds ---" % (time_RF.time() - start_time_rf_tuning_para))
+    print("--- %s seconds ---" % (time.time() - start_time_rf_tuning_para))
     print("")
 
 
