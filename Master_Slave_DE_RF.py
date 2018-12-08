@@ -1,7 +1,7 @@
 import multiprocessing as mp
 import pandas as pd
-import random, time_RF
-from time_RF import sleep
+import random, time
+from time import sleep
 import numpy as np
 import platform
 import logging, os
